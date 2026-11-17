@@ -5,7 +5,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   IconBrandGithub,
-  IconShieldBolt,
   IconFileCertificate,
   IconSettings,
   IconWorld,
@@ -125,9 +124,9 @@ export function Sidebar({
     >
       {/* Logo */}
       <div className="flex items-center gap-2 px-4 py-6 mt-6" style={{ borderBottom: "1px solid var(--sidebar-border)" }}>
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-600">
-          <IconShieldBolt size={26} className="text-white" />
-        </div>
+        {/* Icône de marque : <img> simple, car c'est un petit PNG statique déjà dimensionné (pas besoin de next/image). */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/brand/icon.png" alt="" width={40} height={40} className="h-10 w-10 shrink-0" />
         <div className="flex flex-col">
           <span className="text-[22px] font-light text-white leading-none">Open<span className="text-violet-600 uppercase font-black">kido</span></span>
           {version && (

@@ -1,6 +1,6 @@
 <div align="center">
 
-# OpenKido
+<img src="docs/banner.png" alt="OpenKido — Détectez et corrigez les risques de sécurité dans vos projets" width="100%">
 
 **Audit de sécurité de vos dépôts GitHub et de vos domaines — en un seul endroit.**
 
