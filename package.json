@@ -58,11 +58,11 @@
 	"license": "Apache-2.0",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/burotica49/OpenKido.git"
+		"url": "git+https://github.com/arnaudroy-lab/OpenKido.git"
 	},
-	"homepage": "https://github.com/burotica49/OpenKido#readme",
+	"homepage": "https://github.com/arnaudroy-lab/OpenKido#readme",
 	"bugs": {
-		"url": "https://github.com/burotica49/OpenKido/issues"
+		"url": "https://github.com/arnaudroy-lab/OpenKido/issues"
 	},
 	"author": {
 		"name": "Burotica",

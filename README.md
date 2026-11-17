@@ -6,7 +6,7 @@
 
 Dépendances vulnérables, paquets malveillants, secrets oubliés dans le code, mauvaises configurations GitHub, licences à risque, certificats SSL : OpenKido réunit tout dans une liste unique, triée par gravité, avec la façon de corriger chaque problème.
 
-[![CI](https://github.com/burotica49/OpenKido/actions/workflows/ci.yml/badge.svg)](https://github.com/burotica49/OpenKido/actions/workflows/ci.yml)
+[![CI](https://github.com/arnaudroy-lab/OpenKido/actions/workflows/ci.yml/badge.svg)](https://github.com/arnaudroy-lab/OpenKido/actions/workflows/ci.yml)
 [![Licence : Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue.svg)](LICENSE)
 
 ![Le Feed Issues d'OpenKido](docs/screenshots/issues.png)
@@ -147,7 +147,7 @@ L'application embarque son propre serveur local ; rien à installer à côté. L
 Prérequis : macOS, Node.js 22 ou plus récent, et un fichier `.env.local` renseigné (voir [Configuration](#configuration)).
 
 ```bash
-git clone https://github.com/burotica49/OpenKido.git
+git clone https://github.com/arnaudroy-lab/OpenKido.git
 cd Openkido
 npm install
 cp .env.local.example .env.local   # puis renseignez les valeurs
