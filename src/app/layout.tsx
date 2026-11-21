@@ -58,7 +58,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="min-h-screen bg-background text-foreground">
         <AuthSessionProvider>
           <TooltipProvider>
-            <div className="flex min-h-screen">
+            <div className="flex flex-col md:flex-row min-h-screen">
               {session?.user && (
                 <Sidebar
                   user={session.user}

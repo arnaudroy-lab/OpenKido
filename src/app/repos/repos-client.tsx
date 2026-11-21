@@ -89,8 +89,8 @@ function ReposTab({ repos, summaries, query, setQuery, onNotice }: {
 
   return (
     <div className="flex-1 bg-white">
-      <div className="flex items-center gap-2 px-6 py-3 border-b border-border">
-        <div className="relative w-64">
+      <div className="flex flex-wrap items-center gap-2 px-4 md:px-6 py-3 border-b border-border">
+        <div className="relative w-full sm:w-64">
           <IconSearch size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <Input placeholder="Rechercher un repo…" value={query} onChange={(e) => setQuery(e.target.value)}
             className="pl-8 h-8 text-[13px] bg-muted/40 border-border" />
@@ -106,10 +106,10 @@ function ReposTab({ repos, summaries, query, setQuery, onNotice }: {
         </div>
       </div>
 
-      <table className="w-full text-[13px]">
+      <div className="overflow-x-auto"><table className="w-full min-w-[640px] text-[13px]">
         <thead>
           <tr className="border-b border-border bg-muted/30">
-            <th className="text-left px-6 py-2.5 font-medium text-muted-foreground text-[12px]">Repo</th>
+            <th className="text-left px-4 md:px-6 py-2.5 font-medium text-muted-foreground text-[12px]">Repo</th>
             <th className="text-left px-4 py-2.5 font-medium text-muted-foreground text-[12px]">Langage</th>
             <th className="text-left px-4 py-2.5 font-medium text-muted-foreground text-[12px]">Issues</th>
             <th className="text-left px-4 py-2.5 font-medium text-muted-foreground text-[12px]">Dernier scan</th>
@@ -125,7 +125,7 @@ function ReposTab({ repos, summaries, query, setQuery, onNotice }: {
               : null;
             return (
               <tr key={repo.id} className="hover:bg-muted/20 transition-colors group">
-                <td className="px-6 py-3">
+                <td className="px-4 md:px-6 py-3">
                   <div className="flex items-center gap-2">
                     <Link href={`/repos/${repo.owner}/${repo.name}`}
                       className="font-medium text-foreground hover:text-violet-600 transition-colors">
@@ -177,7 +177,7 @@ function ReposTab({ repos, summaries, query, setQuery, onNotice }: {
             );
           })}
         </tbody>
-      </table>
+      </table></div>
       {filtered.length === 0 && (
         <div className="py-16 text-center text-sm text-muted-foreground">
           Aucun repo ne correspond à &quot;{query}&quot;.
@@ -203,8 +203,8 @@ function PullRequestsTab({ pullRequests, query, setQuery }: {
 
   return (
     <div className="flex-1 bg-white">
-      <div className="flex items-center gap-2 px-6 py-3 border-b border-border">
-        <div className="relative w-64">
+      <div className="flex flex-wrap items-center gap-2 px-4 md:px-6 py-3 border-b border-border">
+        <div className="relative w-full sm:w-64">
           <IconSearch size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <Input placeholder="Rechercher une PR…" value={query} onChange={(e) => setQuery(e.target.value)}
             className="pl-8 h-8 text-[13px] bg-muted/40 border-border" />
@@ -221,10 +221,10 @@ function PullRequestsTab({ pullRequests, query, setQuery }: {
           <p className="text-[13px] text-muted-foreground">Vos PRs ouvertes sur tous vos repos apparaîtront ici.</p>
         </div>
       ) : (
-        <table className="w-full text-[13px]">
+        <div className="overflow-x-auto"><table className="w-full min-w-[640px] text-[13px]">
           <thead>
             <tr className="border-b border-border bg-muted/30">
-              <th className="text-left px-6 py-2.5 font-medium text-muted-foreground text-[12px]">Pull Request</th>
+              <th className="text-left px-4 md:px-6 py-2.5 font-medium text-muted-foreground text-[12px]">Pull Request</th>
               <th className="text-left px-4 py-2.5 font-medium text-muted-foreground text-[12px]">Repository</th>
               <th className="text-left px-4 py-2.5 font-medium text-muted-foreground text-[12px]">Auteur</th>
               <th className="text-left px-4 py-2.5 font-medium text-muted-foreground text-[12px]">Labels</th>
@@ -235,7 +235,7 @@ function PullRequestsTab({ pullRequests, query, setQuery }: {
           <tbody className="divide-y divide-border">
             {filtered.map((pr) => (
               <tr key={pr.id} className="hover:bg-muted/20 transition-colors">
-                <td className="px-6 py-3 max-w-xs">
+                <td className="px-4 md:px-6 py-3 max-w-xs">
                   <div className="flex items-start gap-2">
                     <IconGitPullRequest size={14} className={cn("mt-0.5 shrink-0", pr.draft ? "text-muted-foreground" : "text-green-600")} />
                     <div className="min-w-0">
@@ -280,7 +280,7 @@ function PullRequestsTab({ pullRequests, query, setQuery }: {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table></div>
       )}
     </div>
   );
@@ -342,7 +342,7 @@ function ChecksTab({ repos, summaries }: {
   return (
     <div className="flex-1 bg-white">
       {/* Summary bar */}
-      <div className="flex items-center gap-6 px-6 py-3 border-b border-border bg-muted/20">
+      <div className="flex items-center gap-6 px-4 md:px-6 py-3 border-b border-border bg-muted/20">
         {(["critical", "warning", "partial", "ok", "pending"] as CheckStatus[]).map((s) => (
           <div key={s} className={cn("flex items-center gap-1.5 text-[13px]", STATUS_CONFIG[s].className)}>
             {STATUS_CONFIG[s].icon}
@@ -352,10 +352,10 @@ function ChecksTab({ repos, summaries }: {
         ))}
       </div>
 
-      <table className="w-full text-[13px]">
+      <div className="overflow-x-auto"><table className="w-full min-w-[640px] text-[13px]">
         <thead>
           <tr className="border-b border-border bg-muted/30">
-            <th className="text-left px-6 py-2.5 font-medium text-muted-foreground text-[12px]">Statut</th>
+            <th className="text-left px-4 md:px-6 py-2.5 font-medium text-muted-foreground text-[12px]">Statut</th>
             <th className="text-left px-4 py-2.5 font-medium text-muted-foreground text-[12px]">Repository</th>
             <th className="text-left px-4 py-2.5 font-medium text-muted-foreground text-[12px]">Issues</th>
             <th className="text-left px-4 py-2.5 font-medium text-muted-foreground text-[12px]">Dépendances</th>
@@ -374,7 +374,7 @@ function ChecksTab({ repos, summaries }: {
               : null;
             return (
               <tr key={repo.id} className="hover:bg-muted/20 transition-colors">
-                <td className="px-6 py-3">
+                <td className="px-4 md:px-6 py-3">
                   <div className={cn("flex items-center gap-1.5 font-medium", cfg.className)}>
                     {cfg.icon}
                     <span className="text-[12px]">{cfg.label}</span>
@@ -408,7 +408,7 @@ function ChecksTab({ repos, summaries }: {
             );
           })}
         </tbody>
-      </table>
+      </table></div>
     </div>
   );
 }
@@ -507,7 +507,7 @@ export function ReposClient({
 
       {/* Progress bar */}
       {scanningAll && scanProgress && (
-        <div className="bg-white border-b border-border px-6 py-2">
+        <div className="bg-white border-b border-border px-4 md:px-6 py-2">
           <div className="flex items-center gap-3">
             <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden">
               <div className="h-full bg-violet-500 rounded-full transition-all duration-300"
@@ -521,7 +521,7 @@ export function ReposClient({
       )}
 
       {notice && (
-        <div className={cn("flex items-start justify-between gap-3 px-6 py-2.5 text-[12px] border-b",
+        <div className={cn("flex items-start justify-between gap-3 px-4 md:px-6 py-2.5 text-[12px] border-b",
           notice.kind === "error" ? "bg-red-50 text-red-800 border-red-200" : "bg-amber-50 text-amber-800 border-amber-200")}>
           <span className="flex items-start gap-2"><IconAlertTriangle size={14} className="mt-0.5 shrink-0" />{notice.text}</span>
           <button onClick={() => setNotice(null)} aria-label="Fermer" className="shrink-0 opacity-70 hover:opacity-100"><IconX size={14} /></button>
@@ -529,7 +529,7 @@ export function ReposClient({
       )}
 
       {/* Tabs */}
-      <div className="bg-white border-b border-border px-6">
+      <div className="bg-white border-b border-border px-4 md:px-6">
         <div className="flex items-end gap-0">
           {tabs.map((t) => (
             <button key={t.id} onClick={() => { setTab(t.id); setQuery(""); }}

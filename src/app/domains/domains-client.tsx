@@ -137,7 +137,7 @@ function SucuriPanel({ domain, raw, at, onDone }: { domain: string; raw: string 
     <div className="space-y-3">
       {r ? (
         <>
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {([["Global", r.ratings.total], ["Sécurité", r.ratings.security], ["Domaine", r.ratings.domain], ["TLS", r.ratings.tls]] as const).map(([label, v]) => (
               <div key={label} className="rounded-md border border-border px-2 py-2 text-center">
                 <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">{label}</p>
@@ -243,7 +243,7 @@ function AddDomainForm({ onDone }: { onDone: () => void }) {
           placeholder="exemple.com"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className="pl-8 h-9 w-64 text-[13px]"
+          className="pl-8 h-9 w-full sm:w-64 text-[13px]"
           disabled={pending}
         />
       </div>
@@ -289,7 +289,7 @@ export function DomainsClient({ domains: initial }: { domains: Domain[] }) {
 
       {/* Summary */}
       {initial.length > 0 && (
-        <div className="flex items-center gap-6 px-6 py-3 bg-white border-b border-border">
+        <div className="flex items-center gap-6 px-4 md:px-6 py-3 bg-white border-b border-border">
           {(["critical", "warn", "ok", "unknown"] as const).map((s) => {
             const cfg = SCORE_CONFIG[s];
             return counts[s] > 0 ? (
@@ -316,10 +316,10 @@ export function DomainsClient({ domains: initial }: { domains: Domain[] }) {
             </div>
           </div>
         ) : (
-          <table className="w-full text-[13px]">
+          <div className="overflow-x-auto"><table className="w-full min-w-[640px] text-[13px]">
             <thead>
               <tr className="border-b border-border bg-muted/30">
-                <th className="text-left px-6 py-2.5 font-medium text-muted-foreground text-[12px]">Statut</th>
+                <th className="text-left px-4 md:px-6 py-2.5 font-medium text-muted-foreground text-[12px]">Statut</th>
                 <th className="text-left px-4 py-2.5 font-medium text-muted-foreground text-[12px]">Domaine</th>
                 <th className="text-left px-4 py-2.5 font-medium text-muted-foreground text-[12px]">HTTP</th>
                 <th className="text-left px-4 py-2.5 font-medium text-muted-foreground text-[12px]">SSL</th>
@@ -347,7 +347,7 @@ export function DomainsClient({ domains: initial }: { domains: Domain[] }) {
                     onClick={() => setOpenId(openId === d.id ? null : d.id)}
                     className={cn("hover:bg-muted/20 transition-colors group cursor-pointer border-l-2", openId === d.id ? "border-l-violet-600 bg-violet-50/40" : "border-l-transparent")}
                   >
-                    <td className="px-6 py-3">
+                    <td className="px-4 md:px-6 py-3">
                       <div className={cn("flex items-center gap-1.5 font-medium text-[12px]", cfg.className)}>
                         {cfg.icon} {cfg.label}
                       </div>
@@ -385,7 +385,7 @@ export function DomainsClient({ domains: initial }: { domains: Domain[] }) {
                 );
               })}
             </tbody>
-          </table>
+          </table></div>
         )}
       </div>
 

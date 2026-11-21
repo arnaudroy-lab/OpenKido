@@ -30,7 +30,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function IssueTable({ issues }: { issues: ResolvedIssue[] }) {
   return (
-    <table className="w-full text-[11px] border-collapse">
+    <div className="overflow-x-auto"><table className="w-full text-[11px] border-collapse">
       <thead>
         <tr className="text-left text-muted-foreground border-b border-border">
           <th className="py-1 pr-2 font-medium w-16">Gravité</th>
@@ -49,7 +49,7 @@ function IssueTable({ issues }: { issues: ResolvedIssue[] }) {
           </tr>
         ))}
       </tbody>
-    </table>
+    </table></div>
   );
 }
 
@@ -91,7 +91,7 @@ export default async function ReportPage() {
 
         <Section title="Synthèse">
           <p className="text-[13px] font-medium">{headline}</p>
-          <div className="grid grid-cols-5 gap-3 mt-2">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-2">
             {(["critical", "high", "medium", "low"] as const).map((s) => (
               <div key={s} className="rounded border border-border px-3 py-2">
                 <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{SEV[s]}</p>
@@ -104,7 +104,7 @@ export default async function ReportPage() {
             </div>
           </div>
           {report.byKind.length > 0 && (
-            <table className="w-full text-[11px] mt-3 border-collapse">
+            <div className="overflow-x-auto"><table className="w-full text-[11px] mt-3 border-collapse">
               <thead><tr className="text-left text-muted-foreground border-b border-border"><th className="py-1 font-medium">Catégorie</th>{(["critical", "high", "medium", "low"] as const).map((s) => <th key={s} className="py-1 font-medium text-right w-16">{SEV[s]}</th>)}<th className="py-1 font-medium text-right w-14">Total</th></tr></thead>
               <tbody>
                 {report.byKind.map((k) => (
@@ -115,7 +115,7 @@ export default async function ReportPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
           )}
           {report.devHidden > 0 && <p className="text-muted-foreground">{report.devHidden} alerte(s) sur des dépendances de développement (non livrées en production) ne sont pas comptées.</p>}
         </Section>
@@ -141,7 +141,7 @@ export default async function ReportPage() {
 
         {report.byRepo.length > 0 && (
           <Section title="Situation par dépôt">
-            <table className="w-full text-[11px] border-collapse">
+            <div className="overflow-x-auto"><table className="w-full text-[11px] border-collapse">
               <thead><tr className="text-left text-muted-foreground border-b border-border"><th className="py-1 font-medium">Dépôt</th><th className="py-1 font-medium text-right w-12">Crit.</th><th className="py-1 font-medium text-right w-12">Élevée</th><th className="py-1 font-medium text-right w-12">Autres</th><th className="py-1 font-medium text-right w-14">Malware</th><th className="py-1 font-medium text-right w-14">Secrets</th><th className="py-1 font-medium text-right w-16">Licences</th><th className="py-1 font-medium text-right w-14">Posture</th></tr></thead>
               <tbody>
                 {report.byRepo.slice(0, 60).map((r) => {
@@ -160,7 +160,7 @@ export default async function ReportPage() {
                   );
                 })}
               </tbody>
-            </table>
+            </table></div>
             {report.byRepo.length > 60 && <p className="text-muted-foreground">{report.byRepo.length - 60} dépôt(s) supplémentaire(s) non listé(s).</p>}
           </Section>
         )}
@@ -178,7 +178,7 @@ export default async function ReportPage() {
         {(report.accepted.length > 0 || report.snoozed.length > 0) && (
           <Section title="Registre des risques acceptés et reportés">
             <p className="text-muted-foreground">Alertes ignorées ou reportées volontairement, avec leur motif (traçabilité pour un audit).</p>
-            <table className="w-full text-[11px] border-collapse">
+            <div className="overflow-x-auto"><table className="w-full text-[11px] border-collapse">
               <thead><tr className="text-left text-muted-foreground border-b border-border"><th className="py-1 pr-2 font-medium w-16">Gravité</th><th className="py-1 pr-2 font-medium">Élément</th><th className="py-1 pr-2 font-medium">Décision</th><th className="py-1 font-medium">Motif</th></tr></thead>
               <tbody>
                 {[...report.accepted, ...report.snoozed].slice(0, 80).map((i) => (
@@ -190,7 +190,7 @@ export default async function ReportPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
           </Section>
         )}
 

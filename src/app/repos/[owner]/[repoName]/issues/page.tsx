@@ -30,7 +30,7 @@ export default async function RepoIssuesPage({ params }: { params: Promise<{ own
       </HelpPanel>
 
       {gaps.length > 0 && (
-        <div className="border-b border-amber-200 bg-amber-50 px-6 py-2.5 text-[12px] text-amber-900 flex items-start gap-2">
+        <div className="border-b border-amber-200 bg-amber-50 px-4 md:px-6 py-2.5 text-[12px] text-amber-900 flex items-start gap-2">
           <IconAlertTriangle size={14} className="mt-0.5 shrink-0" />
           <span><span className="font-medium">Analyses manquantes — « aucune alerte » ne veut pas dire « sain » : </span>{gaps.join(" · ")}.</span>
         </div>

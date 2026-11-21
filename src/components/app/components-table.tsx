@@ -37,10 +37,10 @@ export function ComponentsTable({ owner, repo, rows, versionsByName, variant }: 
 
   return (
     <>
-      <table className="w-full text-[13px]">
+      <div className="overflow-x-auto"><table className="w-full min-w-[640px] text-[13px]">
         <thead>
           <tr className="border-b border-border bg-muted/30">
-            <th className={cn(TH, "px-6")}>Composant</th>
+            <th className={cn(TH, "px-4 md:px-6")}>Composant</th>
             <th className={TH}>Version</th>
             {inventory && <th className={TH}>Type</th>}
             {inventory && <th className={TH}>Dossier</th>}
@@ -58,7 +58,7 @@ export function ComponentsTable({ owner, repo, rows, versionsByName, variant }: 
                 onClick={() => setOpenName(active ? null : c.name)}
                 className={cn("cursor-pointer hover:bg-muted/20 transition-colors border-l-2", active ? "border-l-violet-600 bg-violet-50/40" : "border-l-transparent")}
               >
-                <td className="px-6 py-2.5">
+                <td className="px-4 md:px-6 py-2.5">
                   <div className="flex items-center gap-2">
                     {c.status === "vulnerable" ? <IconPackage size={13} className="text-muted-foreground shrink-0" />
                       : c.status === "non-analysé" ? <IconHelpCircle size={13} className="text-amber-500 shrink-0" />
@@ -92,7 +92,7 @@ export function ComponentsTable({ owner, repo, rows, versionsByName, variant }: 
             );
           })}
         </tbody>
-      </table>
+      </table></div>
       {openVersions && openVersions.length > 0 && (
         <ComponentDrawer owner={owner} repo={repo} versions={openVersions} onClose={() => setOpenName(null)} />
       )}

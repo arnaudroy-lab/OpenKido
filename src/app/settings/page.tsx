@@ -38,7 +38,7 @@ export default async function SettingsPage() {
       <TopBar breadcrumb="Paramètres" />
       <PageHeader title="Paramètres" subtitle="Compte GitHub et session." />
 
-      <div className="px-6 py-6 max-w-xl space-y-4">
+      <div className="px-4 md:px-6 py-6 max-w-xl space-y-4">
         <div className="rounded-lg border border-border bg-white px-5 py-4">
           <p className="text-[11px] text-muted-foreground uppercase tracking-wider mb-3">Compte</p>
           <div className="flex items-center gap-3">

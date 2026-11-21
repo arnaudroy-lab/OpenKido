@@ -125,7 +125,7 @@ function StatCard({ icon, label, value, sub, tone = "default" }: {
 }) {
   const toneClass = { ok: "text-green-600", warning: "text-amber-500", critical: "text-red-600", default: "text-foreground" }[tone];
   return (
-    <div className="px-6 py-4 border-r border-border last:border-0">
+    <div className="px-4 md:px-6 py-4 border-r border-border last:border-0">
       <div className="flex items-center gap-1.5 mb-1 text-muted-foreground text-[11px] uppercase tracking-wider">
         {icon}<span>{label}</span>
       </div>
@@ -241,7 +241,7 @@ export function CodeAuditClient({
 
       {/* Progress bar */}
       {scanning && progress && (
-        <div className="bg-white border-b border-border px-6 py-2">
+        <div className="bg-white border-b border-border px-4 md:px-6 py-2">
           <div className="flex items-center gap-3">
             <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden">
               <div
@@ -255,7 +255,7 @@ export function CodeAuditClient({
       )}
 
       {notice && (
-        <div className={cn("flex items-start justify-between gap-3 px-6 py-2.5 text-[12px] border-b",
+        <div className={cn("flex items-start justify-between gap-3 px-4 md:px-6 py-2.5 text-[12px] border-b",
           notice.kind === "error" ? "bg-red-50 text-red-800 border-red-200" : "bg-amber-50 text-amber-800 border-amber-200")}>
           <span className="flex items-start gap-2"><IconAlertTriangle size={14} className="mt-0.5 shrink-0" />{notice.text}</span>
           <button onClick={() => setNotice(null)} aria-label="Fermer" className="shrink-0 opacity-70 hover:opacity-100"><IconX size={14} /></button>
@@ -273,7 +273,7 @@ export function CodeAuditClient({
         if (rows.length === 0) return null;
         const first = audited.length ? repos.find((r) => summaries[`${r.owner}/${r.name}`]) : undefined;
         return (
-          <div className="border-b border-amber-200 bg-amber-50 px-6 py-3 text-[12px] text-amber-900">
+          <div className="border-b border-amber-200 bg-amber-50 px-4 md:px-6 py-3 text-[12px] text-amber-900">
             <p className="font-medium flex items-center gap-2"><IconAlertTriangle size={14} />Cette page affiche les alertes remontées par GitHub : si une fonction n&apos;y est pas activée, il n&apos;y a rien à afficher.</p>
             <ul className="mt-1.5 space-y-0.5 list-disc pl-6">
               {rows.map((r) => <li key={r.label}><span className="font-medium">{r.label}</span> est désactivé sur {r.n}/{audited.length} dépôts — {r.hint}.</li>)}
@@ -285,7 +285,7 @@ export function CodeAuditClient({
 
       {/* Stats bar */}
       {audited.length > 0 && (
-        <div className="grid grid-cols-4 bg-white border-b border-border">
+        <div className="grid grid-cols-2 md:grid-cols-4 bg-white border-b border-border">
           <StatCard icon={<IconAlertTriangle size={14} />} label="Critiques" value={totalCritical}
             tone={totalCritical > 0 ? "critical" : "ok"}
             sub={totalCritical === 0 ? "Aucune" : "Action immédiate"} />
@@ -301,8 +301,8 @@ export function CodeAuditClient({
       )}
 
       {/* Toolbar */}
-      <div className="bg-white border-b border-border px-6 py-3 flex items-center gap-3">
-        <div className="w-64">
+      <div className="bg-white border-b border-border px-4 md:px-6 py-3 flex items-center gap-3 flex-wrap">
+        <div className="w-full sm:w-64">
           <Input placeholder="Rechercher…" value={query} onChange={(e) => setQuery(e.target.value)}
             className="h-8 text-[13px] bg-muted/40 border-border" />
         </div>
@@ -317,10 +317,10 @@ export function CodeAuditClient({
 
       {/* Table */}
       <div className="flex-1 bg-white">
-        <table className="w-full text-[13px]">
+        <div className="overflow-x-auto"><table className="w-full min-w-[640px] text-[13px]">
           <thead>
             <tr className="border-b border-border bg-muted/30">
-              <th className="text-left px-6 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Repository</th>
+              <th className="text-left px-4 md:px-6 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Repository</th>
               <th className="text-left px-4 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
                 <span className="flex items-center gap-1"><IconCode size={12} /> Code Scanning</span>
               </th>
@@ -349,7 +349,7 @@ export function CodeAuditClient({
               return (
                 <tr key={repo.id} className="hover:bg-muted/20 transition-colors group">
                   {/* Repo name */}
-                  <td className="px-6 py-3">
+                  <td className="px-4 md:px-6 py-3">
                     <div className="flex items-center gap-2">
                       {worst ? (
                         <span className={cn("h-2 w-2 rounded-full shrink-0", {
@@ -434,7 +434,7 @@ export function CodeAuditClient({
               );
             })}
           </tbody>
-        </table>
+        </table></div>
 
         {filtered.length === 0 && (
           <div className="py-16 text-center text-sm text-muted-foreground">

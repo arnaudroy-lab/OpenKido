@@ -76,7 +76,7 @@ const FixTime = ({ minutes }: { minutes?: number }) => (
 
 function RowActions({ inactive, onAction, onReopen }: { inactive: boolean; onAction: (mode: "ignore" | "snooze" | "assign") => void; onReopen: () => void }) {
   return (
-    <div onClick={(e) => e.stopPropagation()} className="w-[104px] shrink-0 flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
+    <div onClick={(e) => e.stopPropagation()} className="max-md:w-full w-[104px] shrink-0 flex items-center justify-end gap-1 md:opacity-0 md:group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
       {inactive ? (
         <button onClick={onReopen} className="rounded border border-border px-2 py-1 text-[11px] hover:bg-muted">Rouvrir</button>
       ) : (
@@ -98,7 +98,7 @@ function IssueRow({ issue, hideTarget, selected, active, onOpen, onToggle, onAct
   return (
     <li
       onClick={onOpen}
-      className={cn("flex items-start gap-3 px-6 py-3 hover:bg-muted/20 group cursor-pointer border-l-2", active ? "border-l-violet-600 bg-violet-50/40" : "border-l-transparent", inactive && "opacity-80")}
+      className={cn("flex flex-wrap md:flex-nowrap items-start gap-3 px-4 md:px-6 py-3 hover:bg-muted/20 group cursor-pointer border-l-2", active ? "border-l-violet-600 bg-violet-50/40" : "border-l-transparent", inactive && "opacity-80")}
     >
       <input type="checkbox" checked={selected} onChange={onToggle} onClick={(e) => e.stopPropagation()} aria-label="Sélectionner" className="mt-1 accent-violet-600" />
       <span className={cn("mt-0.5 w-16 shrink-0 text-center rounded px-1.5 py-0.5 text-[10px] font-semibold", SEV_CLS[issue.severity])}>{SEV_LABEL[issue.severity]}</span>
@@ -126,8 +126,8 @@ function IssueRow({ issue, hideTarget, selected, active, onOpen, onToggle, onAct
         {issue.status === "snoozed" && <p className="text-[11px] text-muted-foreground mt-1.5">Reportée jusqu&apos;au {fmtDate(issue.until)}{issue.note ? ` — ${issue.note}` : ""}</p>}
         {issue.snoozeExpired && <p className="text-[11px] text-amber-700 mt-1.5">Le report est arrivé à échéance : l&apos;alerte est de nouveau ouverte.</p>}
       </div>
-      <div className="w-24 shrink-0 pt-0.5"><FixTime minutes={issue.fixMinutes} /></div>
-      <div className="w-24 shrink-0"><StatusPill status={issue.status} isNew={issue.isNew} /></div>
+      <div className="hidden md:block w-24 shrink-0 pt-0.5"><FixTime minutes={issue.fixMinutes} /></div>
+      <div className="hidden md:block w-24 shrink-0"><StatusPill status={issue.status} isNew={issue.isNew} /></div>
       <RowActions inactive={inactive} onAction={onAction} onReopen={onReopen} />
     </li>
   );
@@ -143,7 +143,7 @@ function GroupRow({ group, selected, active, onOpen, onToggle, onAction, onReope
   return (
     <li
       onClick={onOpen}
-      className={cn("flex items-start gap-3 px-6 py-3 hover:bg-muted/20 group cursor-pointer border-l-2", active ? "border-l-violet-600 bg-violet-50/40" : "border-l-transparent", inactive && "opacity-80")}
+      className={cn("flex flex-wrap md:flex-nowrap items-start gap-3 px-4 md:px-6 py-3 hover:bg-muted/20 group cursor-pointer border-l-2", active ? "border-l-violet-600 bg-violet-50/40" : "border-l-transparent", inactive && "opacity-80")}
     >
       <input type="checkbox" checked={selected} onChange={onToggle} onClick={(e) => e.stopPropagation()} aria-label="Sélectionner le groupe" className="mt-1 accent-violet-600" />
       <span className={cn("mt-0.5 w-16 shrink-0 text-center rounded px-1.5 py-0.5 text-[10px] font-semibold", SEV_CLS[group.severity])}>{SEV_LABEL[group.severity]}</span>
@@ -158,8 +158,8 @@ function GroupRow({ group, selected, active, onOpen, onToggle, onAction, onReope
         <p className="text-[11px] text-muted-foreground mt-0.5 line-clamp-1">{group.targets.join(" · ")}</p>
         <p className="text-[12px] text-foreground/80 mt-1 break-words line-clamp-1">{group.members[0].detail}</p>
       </div>
-      <div className="w-24 shrink-0 pt-0.5"><FixTime minutes={group.fixMinutes} /></div>
-      <div className="w-24 shrink-0"><StatusPill status={status} isNew={anyNew} /></div>
+      <div className="hidden md:block w-24 shrink-0 pt-0.5"><FixTime minutes={group.fixMinutes} /></div>
+      <div className="hidden md:block w-24 shrink-0"><StatusPill status={status} isNew={anyNew} /></div>
       <RowActions inactive={inactive} onAction={onAction} onReopen={onReopen} />
     </li>
   );
@@ -436,26 +436,26 @@ export function SeverityHeader({ api, showHints = false }: { api: WorkspaceApi; 
   const { sev, setSev, setTab, counts, devHidden, noFixCount, onlyNew, setOnlyNew, newCount, resolvedCount } = api;
   return (
     <div className="bg-white border-b border-border">
-      <div className="grid grid-cols-6 divide-x divide-border">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 divide-x divide-border">
         {(["critical", "high", "medium", "low"] as const).map((s) => (
-          <button key={s} onClick={() => { setTab("open"); setOnlyNew(false); setSev(sev === s ? "all" : s); }} className={cn("text-left px-6 py-4 hover:bg-muted/30 transition-colors", sev === s && "bg-violet-50/60")}>
+          <button key={s} onClick={() => { setTab("open"); setOnlyNew(false); setSev(sev === s ? "all" : s); }} className={cn("text-left px-4 md:px-6 py-4 hover:bg-muted/30 transition-colors", sev === s && "bg-violet-50/60")}>
             <p className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1.5">{SEV_LABEL[s]}</p>
             <p className={cn("text-2xl font-semibold tabular-nums", counts[s] === 0 ? "text-green-600" : s === "critical" ? "text-red-600" : s === "high" ? "text-orange-600" : "text-foreground")}>{counts[s]}</p>
           </button>
         ))}
-        <button onClick={() => { setTab("open"); setSev("all"); setOnlyNew(!onlyNew); }} title="Alertes apparues depuis moins de 7 jours" className={cn("text-left px-6 py-4 hover:bg-muted/30 transition-colors", onlyNew && "bg-violet-50/60")}>
+        <button onClick={() => { setTab("open"); setSev("all"); setOnlyNew(!onlyNew); }} title="Alertes apparues depuis moins de 7 jours" className={cn("text-left px-4 md:px-6 py-4 hover:bg-muted/30 transition-colors", onlyNew && "bg-violet-50/60")}>
           <p className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1.5">Nouvelles</p>
           <p className={cn("text-2xl font-semibold tabular-nums", newCount > 0 ? "text-violet-600" : "text-foreground")}>{newCount}</p>
           <p className="text-[11px] text-muted-foreground mt-0.5">sur 7 jours</p>
         </button>
-        <button onClick={() => { setTab("resolved"); setSev("all"); setOnlyNew(false); }} title="Alertes qui ont disparu depuis moins de 7 jours" className="text-left px-6 py-4 hover:bg-muted/30 transition-colors">
+        <button onClick={() => { setTab("resolved"); setSev("all"); setOnlyNew(false); }} title="Alertes qui ont disparu depuis moins de 7 jours" className="text-left px-4 md:px-6 py-4 hover:bg-muted/30 transition-colors">
           <p className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1.5">Résolues</p>
           <p className={cn("text-2xl font-semibold tabular-nums", resolvedCount > 0 ? "text-green-600" : "text-foreground")}>{resolvedCount}</p>
           <p className="text-[11px] text-muted-foreground mt-0.5">sur 7 jours</p>
         </button>
       </div>
       {showHints && (devHidden > 0 || noFixCount > 0) && (
-        <p className="px-6 py-1.5 border-t border-border text-[11px] text-muted-foreground">
+        <p className="px-4 md:px-6 py-1.5 border-t border-border text-[11px] text-muted-foreground">
           {devHidden > 0 && `${devHidden} dépendance(s) de développement masquée(s)`}{devHidden > 0 && noFixCount > 0 && " · "}{noFixCount > 0 && `${noFixCount} alerte(s) sans correctif`} — non comptées ci-dessus pour les dépendances de développement.
         </p>
       )}
@@ -563,14 +563,14 @@ export function IssuesWorkspace({ issues, login, header, hideTarget, emptyMessag
     <div className="flex flex-col flex-1">
       {header?.({ sev, setSev, setTab, onlyNew, setOnlyNew, counts, devHidden, noFixCount, newCount, resolvedCount: resolved.length })}
 
-      <div className="bg-white border-b border-border px-6 py-3 flex items-center gap-2 flex-wrap">
+      <div className="bg-white border-b border-border px-4 md:px-6 py-3 flex items-center gap-2 flex-wrap">
         {([["open", "Ouvertes", open.length], ["snoozed", "Reportées", byStatus("snoozed").length], ["ignored", "Ignorées", byStatus("ignored").length], ["resolved", "Résolues (7 j)", resolved.length]] as const).map(([t, label, n]) => (
           <button key={t} onClick={() => { setTab(t); setSelected(new Set()); }} className={cn("text-[12px] px-2.5 py-1 rounded-md", tab === t ? "bg-violet-100 text-violet-700 font-medium" : "text-muted-foreground hover:bg-muted")}>
             {label} <span className="tabular-nums opacity-70">{n}</span>
           </button>
         ))}
         <span className="mx-1 h-4 w-px bg-border" />
-        <div className="w-56"><Input placeholder="Rechercher…" value={query} onChange={(e) => setQuery(e.target.value)} className="h-8 text-[13px] bg-muted/40 border-border" /></div>
+        <div className="w-full sm:w-56"><Input placeholder="Rechercher…" value={query} onChange={(e) => setQuery(e.target.value)} className="h-8 text-[13px] bg-muted/40 border-border" /></div>
         <select value={kind} onChange={(e) => setKind(e.target.value as IssueKind | "all")} className="h-8 rounded-md border border-border bg-white px-2 text-[12px]" aria-label="Type">
           <option value="all">Tous les types</option>
           {(Object.keys(KIND_LABEL) as IssueKind[]).map((k) => <option key={k} value={k}>{KIND_LABEL[k]}</option>)}
@@ -583,7 +583,7 @@ export function IssuesWorkspace({ issues, login, header, hideTarget, emptyMessag
       </div>
 
       {selected.size > 0 && tab !== "resolved" && (
-        <div className="sticky top-0 z-10 flex items-center gap-2 bg-violet-600 text-white px-6 py-2 text-[12px]">
+        <div className="sticky top-0 z-10 flex items-center gap-2 bg-violet-600 text-white px-4 md:px-6 py-2 text-[12px]">
           <span className="font-medium">{selected.size} alerte(s) sélectionnée(s)</span>
           {tab === "open" ? (
             <>
@@ -603,7 +603,7 @@ export function IssuesWorkspace({ issues, login, header, hideTarget, emptyMessag
           resolvedVisible.length > 0 ? (
             <ul className="divide-y divide-border">
               {resolvedVisible.map((r) => (
-                <li key={r.key} className="flex items-center gap-3 px-6 py-3">
+                <li key={r.key} className="flex items-center gap-3 px-4 md:px-6 py-3">
                   <IconCircleCheck size={16} className="text-green-600 shrink-0" />
                   <span className={cn("w-16 shrink-0 text-center rounded px-1.5 py-0.5 text-[10px] font-semibold", SEV_CLS[r.severity as IssueSeverity] ?? "bg-muted")}>{SEV_LABEL[r.severity as IssueSeverity] ?? r.severity}</span>
                   <div className="min-w-0 flex-1">
@@ -623,13 +623,13 @@ export function IssuesWorkspace({ issues, login, header, hideTarget, emptyMessag
         ) : (
           <>
             {shown.length > 0 && (
-              <div className="flex items-center gap-3 px-6 py-2 border-b border-border bg-muted/30 text-[11px] text-muted-foreground uppercase tracking-wide">
+              <div className="flex items-center gap-3 px-4 md:px-6 py-2 border-b border-border bg-muted/30 text-[11px] text-muted-foreground uppercase tracking-wide">
                 <input type="checkbox" checked={allSelected} onChange={() => setSelected(allSelected ? new Set() : new Set(shown.flatMap(keysOf)))} aria-label="Tout sélectionner" className="accent-violet-600" />
                 <span className="w-16 shrink-0">Gravité</span>
                 <span className="flex-1">{units.length} élément(s){grouped && units.length < visible.length ? ` (${visible.length} alertes regroupées)` : ""}{units.length > shown.length && ` — ${shown.length} affichés, affinez avec les filtres`}</span>
-                <span className="w-24 shrink-0" title="Estimation indicative">Temps de correction</span>
-                <span className="w-24 shrink-0">Statut</span>
-                <span className="w-[104px] shrink-0" />
+                <span className="hidden md:block w-24 shrink-0" title="Estimation indicative">Temps de correction</span>
+                <span className="hidden md:block w-24 shrink-0">Statut</span>
+                <span className="hidden md:block w-[104px] shrink-0" />
               </div>
             )}
             <ul className="divide-y divide-border">

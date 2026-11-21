@@ -16,7 +16,7 @@ export default function Error({
   return (
     <div className="flex flex-col flex-1 bg-background">
       <TopBar />
-      <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 py-16 text-center">
+      <div className="flex flex-1 flex-col items-center justify-center gap-4 px-4 md:px-6 py-16 text-center">
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-50 text-amber-600">
           <IconAlertTriangle size={22} />
         </div>

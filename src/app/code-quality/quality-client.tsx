@@ -179,7 +179,7 @@ export function CodeQualityClient({
       </HelpPanel>
 
       {notice && (
-        <div className="flex items-start justify-between gap-3 px-6 py-2.5 text-[12px] border-b bg-red-50 text-red-800 border-red-200">
+        <div className="flex items-start justify-between gap-3 px-4 md:px-6 py-2.5 text-[12px] border-b bg-red-50 text-red-800 border-red-200">
           <span className="flex items-start gap-2"><IconAlertTriangle size={14} className="mt-0.5 shrink-0" />{notice.text}</span>
           <button onClick={() => setNotice(null)} aria-label="Fermer" className="shrink-0 opacity-70 hover:opacity-100"><IconX size={14} /></button>
         </div>
@@ -187,7 +187,7 @@ export function CodeQualityClient({
 
       {/* Progress bar */}
       {scanning && progress && (
-        <div className="bg-white border-b border-border px-6 py-2">
+        <div className="bg-white border-b border-border px-4 md:px-6 py-2">
           <div className="flex items-center gap-3">
             <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden">
               <div className="h-full bg-violet-500 rounded-full transition-all duration-300"
@@ -200,7 +200,7 @@ export function CodeQualityClient({
 
       {/* Summary bar — checks overview */}
       {analysedCount > 0 && (
-        <div className="bg-white border-b border-border px-6 py-3">
+        <div className="bg-white border-b border-border px-4 md:px-6 py-3">
           <div className="flex items-center gap-1 flex-wrap">
             <span className="text-[11px] text-muted-foreground mr-2">Sur {analysedCount} repos analysés :</span>
             {checkCounts.map((c) => (
@@ -218,8 +218,8 @@ export function CodeQualityClient({
       )}
 
       {/* Toolbar */}
-      <div className="bg-white border-b border-border px-6 py-3 flex items-center gap-3">
-        <div className="relative w-64">
+      <div className="bg-white border-b border-border px-4 md:px-6 py-3 flex items-center gap-3 flex-wrap">
+        <div className="relative w-full sm:w-64">
           <Input placeholder="Rechercher…" value={query} onChange={(e) => setQuery(e.target.value)}
             className="h-8 text-[13px] bg-muted/40 border-border" />
         </div>
@@ -235,10 +235,10 @@ export function CodeQualityClient({
 
       {/* Table */}
       <div className="flex-1 bg-white">
-        <table className="w-full text-[13px]">
+        <div className="overflow-x-auto"><table className="w-full min-w-[640px] text-[13px]">
           <thead>
             <tr className="border-b border-border bg-muted/30">
-              <th className="text-left px-6 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Score</th>
+              <th className="text-left px-4 md:px-6 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Score</th>
               <th className="text-left px-4 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Repository</th>
               <th className="text-center px-3 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">CI/CD</th>
               <th className="text-center px-3 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Tests</th>
@@ -265,7 +265,7 @@ export function CodeQualityClient({
                   className={cn("hover:bg-muted/20 transition-colors group border-l-2", q && "cursor-pointer", openKey === key ? "border-l-violet-600 bg-violet-50/40" : "border-l-transparent")}
                 >
                   {/* Score */}
-                  <td className="px-6 py-3 w-28">
+                  <td className="px-4 md:px-6 py-3 w-28">
                     {q ? (
                       <div className="flex items-center gap-2">
                         <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden max-w-[48px]">
@@ -317,7 +317,7 @@ export function CodeQualityClient({
               );
             })}
           </tbody>
-        </table>
+        </table></div>
 
         {filtered.length === 0 && (
           <div className="py-16 text-center text-sm text-muted-foreground">
