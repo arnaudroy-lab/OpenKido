@@ -78,7 +78,7 @@ export function OrgSelector({
   const displayInitial = (displayName[0] ?? "U").toUpperCase();
 
   return (
-    <div ref={ref} className="relative mx-2 my-6">
+    <div ref={ref} className="relative mx-2 my-3 md:my-6">
       <button
         onClick={handleOpen}
         className="flex w-full items-center justify-between px-3 py-2 rounded-md cursor-pointer text-[13px] transition-colors"

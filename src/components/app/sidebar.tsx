@@ -134,7 +134,7 @@ export function Sidebar({
   const content = (
     <>
       {/* Logo */}
-      <div className="flex items-center gap-2 px-4 py-6 mt-6" style={{ borderBottom: "1px solid var(--sidebar-border)" }}>
+      <div className="flex items-center gap-2 px-4 py-4 md:py-6 md:mt-6" style={{ borderBottom: "1px solid var(--sidebar-border)" }}>
         {/* Icône de marque : <img> simple, car c'est un petit PNG statique déjà dimensionné (pas besoin de next/image). */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/brand/icon.png" alt="" width={40} height={40} className="h-10 w-10 shrink-0" />
@@ -152,7 +152,7 @@ export function Sidebar({
       <OrgSelector user={user} githubLogin={githubLogin} selectedOrg={selectedOrg} />
 
       {/* Nav */}
-      <nav className="flex-1 overflow-y-auto px-2 py-6 space-y-5">
+      <nav className="md:flex-1 md:overflow-y-auto px-2 py-3 md:py-6 space-y-4 md:space-y-5">
         {sections.map((section, si) => (
           <div key={si}>
             {section.label && (
@@ -233,7 +233,7 @@ export function Sidebar({
       {menuOpen && (
         <div className="md:hidden print:!hidden fixed inset-0 z-50 flex" role="dialog" aria-modal="true" aria-label="Menu principal">
           <aside
-            className="flex w-72 max-w-[85vw] flex-col h-full overflow-y-auto"
+            className="relative flex w-72 max-w-[85vw] flex-col h-full overflow-y-auto"
             style={{ background: "var(--sidebar-bg)" }}
           >
             <button
