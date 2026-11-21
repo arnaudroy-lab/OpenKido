@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,6 +20,11 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 export const metadata: Metadata = {
   title: "Openkido — Sécurité applicative",
   description: "SCA, CVE scanning, SBOM pour vos repos GitHub.",
+};
+
+// Couleur de la barre d'état du navigateur / de l'app installée : celle de la barre mobile.
+export const viewport: Viewport = {
+  themeColor: "#0d0c22",
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
