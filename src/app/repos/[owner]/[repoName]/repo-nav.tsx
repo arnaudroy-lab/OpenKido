@@ -15,7 +15,7 @@ export function RepoNav({ owner, repoName }: { owner: string; repoName: string }
   ];
 
   return (
-    <div className="flex items-center gap-0 bg-white border-b border-border px-6">
+    <div className="flex items-center gap-0 overflow-x-auto whitespace-nowrap bg-white border-b border-border px-4 md:px-6">
       {tabs.map((tab) => {
         const active = tab.match(pathname);
         return (

@@ -41,7 +41,7 @@ export default async function CodeAuditRepoPage({ params }: { params: Promise<{ 
   return (
     <div className="flex flex-col flex-1 bg-background">
       <TopBar breadcrumb={`Code Audit / ${owner} / ${repoName}`} />
-      <div className="px-6 py-5 space-y-5">
+      <div className="px-4 md:px-6 py-5 space-y-5">
         <Link href="/code-audit" className="inline-flex items-center gap-1.5 text-[12px] text-muted-foreground hover:text-foreground transition-colors">
           <IconArrowLeft size={13} /> Retour au Code Audit
         </Link>

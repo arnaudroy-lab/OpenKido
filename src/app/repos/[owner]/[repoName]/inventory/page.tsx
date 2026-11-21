@@ -51,7 +51,7 @@ export default async function InventoryPage({
   const { scan } = await loadRepoScan(owner, repoName);
   if (!scan) {
     return (
-      <div className="px-6 py-5">
+      <div className="px-4 md:px-6 py-5">
         <NeverScanned owner={owner} repo={repoName} />
       </div>
     );
@@ -76,12 +76,12 @@ export default async function InventoryPage({
   return (
     <div className="flex flex-col flex-1">
       {(scan.status === "partial" || scan.legacy) && (
-        <div className="px-6 pt-4">
+        <div className="px-4 md:px-6 pt-4">
           <ScanStatusBanner scan={scan} />
         </div>
       )}
 
-      <div className="flex items-center justify-between px-6 py-3 border-b border-border bg-muted/20">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 md:px-6 py-3 border-b border-border bg-muted/20">
         <p className="text-[13px] text-muted-foreground">
           <span className="font-medium text-foreground">{scan.total}</span> composants ·{" "}
           <span className="font-medium text-red-600">{scan.vulnerable}</span> vulnérables
@@ -92,14 +92,14 @@ export default async function InventoryPage({
         </span>
       </div>
 
-      <div className="flex items-center gap-3 px-6 py-2.5 border-b border-border bg-white">
+      <div className="flex flex-wrap items-center gap-3 px-4 md:px-6 py-2.5 border-b border-border bg-white">
         <form action={`/repos/${owner}/${repoName}/inventory`} className="flex items-center gap-2">
           {filter !== "all" && <input type="hidden" name="f" value={filter} />}
           <input
             name="q"
             defaultValue={q}
             placeholder="Rechercher un composant…"
-            className="h-8 w-64 rounded-md border border-border bg-muted/40 px-3 text-[13px] outline-none focus:border-violet-400"
+            className="h-8 w-full sm:w-64 rounded-md border border-border bg-muted/40 px-3 text-[13px] outline-none focus:border-violet-400"
           />
         </form>
         {FILTERS.map((x) => (

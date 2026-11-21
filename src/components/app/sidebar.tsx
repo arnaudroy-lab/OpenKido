@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   IconBrandGithub,
@@ -17,6 +18,8 @@ import {
   IconLogout,
   IconListCheck,
   IconFileText,
+  IconMenu2,
+  IconX,
 } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { OrgSelector } from "./org-selector";
@@ -117,11 +120,19 @@ export function Sidebar({
     }),
   }));
 
-  return (
-    <aside
-      className="hidden md:flex print:!hidden w-56 shrink-0 flex-col sticky top-0 h-screen"
-      style={{ background: "var(--sidebar-bg)", borderRight: "1px solid var(--sidebar-border)" }}
-    >
+  // Le menu mobile se ferme tout seul à chaque changement de page (il n'est ouvert que pour le chemin courant).
+  const [openedOn, setOpenedOn] = useState<string | null>(null);
+  const menuOpen = openedOn === pathname;
+  const setMenuOpen = (v: boolean) => setOpenedOn(v ? pathname : null);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMenuOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
+
+  const content = (
+    <>
       {/* Logo */}
       <div className="flex items-center gap-2 px-4 py-6 mt-6" style={{ borderBottom: "1px solid var(--sidebar-border)" }}>
         {/* Icône de marque : <img> simple, car c'est un petit PNG statique déjà dimensionné (pas besoin de next/image). */}
@@ -195,7 +206,57 @@ export function Sidebar({
         )}
 
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile : barre du haut + menu coulissant */}
+      <header
+        className="md:hidden print:!hidden sticky top-0 z-30 flex items-center justify-between px-4 py-2.5"
+        style={{ background: "var(--sidebar-bg)", borderBottom: "1px solid var(--sidebar-border)" }}
+      >
+        <div className="flex items-center gap-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/icon.png" alt="" width={28} height={28} className="h-7 w-7 shrink-0" />
+          <span className="text-[18px] font-light text-white leading-none">Open<span className="text-violet-600 uppercase font-black">kido</span></span>
+        </div>
+        <button
+          onClick={() => setMenuOpen(true)}
+          aria-label="Ouvrir le menu"
+          aria-expanded={menuOpen}
+          className="rounded-md p-1.5 text-white hover:bg-white/10"
+        >
+          <IconMenu2 size={22} />
+        </button>
+      </header>
+      {menuOpen && (
+        <div className="md:hidden print:!hidden fixed inset-0 z-50 flex" role="dialog" aria-modal="true" aria-label="Menu principal">
+          <aside
+            className="flex w-72 max-w-[85vw] flex-col h-full overflow-y-auto"
+            style={{ background: "var(--sidebar-bg)" }}
+          >
+            <button
+              onClick={() => setMenuOpen(false)}
+              aria-label="Fermer le menu"
+              className="absolute right-3 top-3 rounded-md p-1.5 text-white/80 hover:bg-white/10 hover:text-white"
+            >
+              <IconX size={20} />
+            </button>
+            {content}
+          </aside>
+          <button className="flex-1 bg-black/50" onClick={() => setMenuOpen(false)} aria-label="Fermer le menu" tabIndex={-1} />
+        </div>
+      )}
+
+      {/* Desktop */}
+      <aside
+        className="hidden md:flex print:!hidden w-56 shrink-0 flex-col sticky top-0 h-screen"
+        style={{ background: "var(--sidebar-bg)", borderRight: "1px solid var(--sidebar-border)" }}
+      >
+        {content}
+      </aside>
+    </>
   );
 }
 
@@ -207,7 +268,7 @@ export function TopBar({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center justify-between border-b border-border bg-white px-6 py-2.5 sticky top-0 z-10 print:hidden">
+    <div className="flex items-center justify-between border-b border-border bg-white px-4 md:px-6 py-2.5 sticky top-0 z-10 print:hidden">
       {/* <span className="text-[13px] text-muted-foreground">{breadcrumb}</span> */}
       <div className="flex items-center gap-1">
         {/* <button className="rounded-md p-1.5 hover:bg-muted transition-colors text-muted-foreground hover:text-foreground">
@@ -234,12 +295,12 @@ export function PageHeader({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center justify-between gap-4 px-6 py-5 border-b border-border bg-white">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 px-4 md:px-6 py-4 md:py-5 border-b border-border bg-white">
       <div>
-        {title && <h1 className="text-2xl font-bold text-foreground uppercase">{title}</h1>}
+        {title && <h1 className="text-xl md:text-2xl font-bold text-foreground uppercase">{title}</h1>}
         {subtitle && <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>}
       </div>
-      {children && <div className="flex items-center gap-2 shrink-0">{children}</div>}
+      {children && <div className="flex flex-wrap items-center gap-2 sm:shrink-0">{children}</div>}
     </div>
   );
 }

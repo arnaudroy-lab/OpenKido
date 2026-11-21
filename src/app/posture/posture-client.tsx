@@ -113,7 +113,7 @@ export function PostureClient({ repos, summaries }: { repos: GithubRepo[]; summa
       </PageHeader>
 
       {running && progress && (
-        <div className="bg-white border-b border-border px-6 py-2 flex items-center gap-3">
+        <div className="bg-white border-b border-border px-4 md:px-6 py-2 flex items-center gap-3">
           <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden">
             <div className="h-full bg-violet-500 rounded-full transition-all duration-300" style={{ width: `${(progress.done / progress.total) * 100}%` }} />
           </div>
@@ -122,28 +122,28 @@ export function PostureClient({ repos, summaries }: { repos: GithubRepo[]; summa
       )}
 
       {notice && (
-        <div className={cn("flex items-start justify-between gap-3 px-6 py-2.5 text-[12px] border-b", notice.kind === "error" ? "bg-red-50 text-red-800 border-red-200" : "bg-amber-50 text-amber-800 border-amber-200")}>
+        <div className={cn("flex items-start justify-between gap-3 px-4 md:px-6 py-2.5 text-[12px] border-b", notice.kind === "error" ? "bg-red-50 text-red-800 border-red-200" : "bg-amber-50 text-amber-800 border-amber-200")}>
           <span className="flex items-start gap-2"><IconAlertTriangle size={14} className="mt-0.5 shrink-0" />{notice.text}</span>
           <button onClick={() => setNotice(null)} aria-label="Fermer" className="shrink-0 opacity-70 hover:opacity-100"><IconX size={14} /></button>
         </div>
       )}
 
       {audited.length > 0 && (
-        <div className="grid grid-cols-4 bg-white border-b border-border divide-x divide-border">
-          <div className="px-6 py-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 bg-white border-b border-border divide-x divide-border">
+          <div className="px-4 md:px-6 py-4">
             <p className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1.5">Score moyen</p>
             <p className={cn("text-2xl font-semibold tabular-nums", avgScore !== null ? scoreColor(avgScore) : "")}>{avgScore ?? "—"}<span className="text-sm text-muted-foreground"> / 100</span></p>
             <p className="text-[11px] text-muted-foreground mt-0.5">part des vérifications réussies</p>
           </div>
-          <div className="px-6 py-4">
+          <div className="px-4 md:px-6 py-4">
             <p className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1.5" title="Points de sécurité non respectés dont la gravité est critique (à traiter en premier)">Échecs critiques</p>
             <p className={cn("text-2xl font-semibold tabular-nums", totalCritical > 0 ? "text-red-600" : "text-green-600")}>{totalCritical}</p>
           </div>
-          <div className="px-6 py-4">
+          <div className="px-4 md:px-6 py-4">
             <p className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1.5">Échecs élevés</p>
             <p className={cn("text-2xl font-semibold tabular-nums", totalHigh > 0 ? "text-orange-600" : "text-green-600")}>{totalHigh}</p>
           </div>
-          <div className="px-6 py-4">
+          <div className="px-4 md:px-6 py-4">
             <p className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1.5">Dépôts audités</p>
             <p className="text-2xl font-semibold tabular-nums">{audited.length}<span className="text-sm text-muted-foreground"> / {repos.length}</span></p>
             {avgCoverage !== null && <p className="text-[11px] text-muted-foreground mt-0.5">couverture moyenne {avgCoverage} %</p>}
@@ -159,8 +159,8 @@ export function PostureClient({ repos, summaries }: { repos: GithubRepo[]; summa
         <p>Cliquez sur un dépôt pour voir chaque point, pourquoi il compte et comment le corriger. Les dépôts au score le plus bas sont affichés en premier.</p>
       </HelpPanel>
 
-      <div className="bg-white border-b border-border px-6 py-3 flex items-center gap-3">
-        <div className="w-64"><Input placeholder="Rechercher…" value={query} onChange={(e) => setQuery(e.target.value)} className="h-8 text-[13px] bg-muted/40 border-border" /></div>
+      <div className="bg-white border-b border-border px-4 md:px-6 py-3 flex items-center gap-3 flex-wrap">
+        <div className="w-full sm:w-64"><Input placeholder="Rechercher…" value={query} onChange={(e) => setQuery(e.target.value)} className="h-8 text-[13px] bg-muted/40 border-border" /></div>
         {(["all", "critical", "never"] as const).map((f) => (
           <button key={f} onClick={() => setFilter(f)} className={cn("text-[12px] px-2.5 py-1 rounded-md transition-colors", filter === f ? "bg-violet-100 text-violet-700 font-medium" : "text-muted-foreground hover:bg-muted")}>
             {{ all: "Tous", critical: "Échecs critiques/élevés", never: "Non audités" }[f]}
@@ -169,7 +169,7 @@ export function PostureClient({ repos, summaries }: { repos: GithubRepo[]; summa
       </div>
 
       <div className="flex-1 bg-white">
-        <table className="w-full text-[13px]">
+        <div className="overflow-x-auto"><table className="w-full min-w-[640px] text-[13px]">
           <thead>
             <tr className="border-b border-border bg-muted/30">
               {["Score", "Repository", "Échecs", "Non évaluables", "Audité", ""].map((h) => (
@@ -182,7 +182,7 @@ export function PostureClient({ repos, summaries }: { repos: GithubRepo[]; summa
               const s = summaries[`${repo.owner}/${repo.name}`];
               return (
                 <tr key={repo.id} className="hover:bg-muted/20 transition-colors group">
-                  <td className="px-6 py-3 w-32">
+                  <td className="px-4 md:px-6 py-3 w-32">
                     {s ? (
                       <div className="flex items-center gap-2">
                         <div className="h-1.5 w-12 rounded-full bg-muted overflow-hidden"><div className={cn("h-full rounded-full", scoreBg(s.score))} style={{ width: `${s.score}%` }} /></div>
@@ -219,10 +219,10 @@ export function PostureClient({ repos, summaries }: { repos: GithubRepo[]; summa
               );
             })}
           </tbody>
-        </table>
+        </table></div>
         {filtered.length === 0 && <div className="py-16 text-center text-sm text-muted-foreground">Aucun dépôt ne correspond à la sélection.</div>}
       </div>
-      <p className="px-6 py-3 text-[11px] text-muted-foreground flex items-center gap-1.5"><IconShieldLock size={12} />Lecture seule : aucun réglage de vos dépôts n&apos;est modifié. Chaque audit consomme environ 20 à 40 requêtes de l&apos;API GitHub.</p>
+      <p className="px-4 md:px-6 py-3 text-[11px] text-muted-foreground flex items-center gap-1.5"><IconShieldLock size={12} />Lecture seule : aucun réglage de vos dépôts n&apos;est modifié. Chaque audit consomme environ 20 à 40 requêtes de l&apos;API GitHub.</p>
     </div>
   );
 }

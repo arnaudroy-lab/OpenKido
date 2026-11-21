@@ -23,7 +23,7 @@ export default async function RepoDashboardPage({
   const { scan } = await loadRepoScan(owner, repoName);
   if (!scan) {
     return (
-      <div className="px-6 py-5">
+      <div className="px-4 md:px-6 py-5">
         <NeverScanned owner={owner} repo={repoName} />
       </div>
     );
@@ -37,7 +37,7 @@ export default async function RepoDashboardPage({
     .slice(0, 5);
 
   return (
-    <div className="px-6 py-5 space-y-5">
+    <div className="px-4 md:px-6 py-5 space-y-5">
       <ScanStatusBanner scan={scan} />
 
       {/* Summary cards */}

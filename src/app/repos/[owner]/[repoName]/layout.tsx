@@ -14,7 +14,7 @@ export default async function RepoLayout({
   return (
     <div className="flex flex-col flex-1 bg-background">
       <TopBar breadcrumb={`Repositories / ${owner} / ${repoName}`} />
-      <div className="px-6 py-5 border-b border-border bg-white">
+      <div className="px-4 md:px-6 py-5 border-b border-border bg-white">
         <div className="flex items-center gap-2">
           <IconBrandGithub size={18} className="text-muted-foreground" />
           <h1 className="text-xl font-bold">{owner} / {repoName}</h1>

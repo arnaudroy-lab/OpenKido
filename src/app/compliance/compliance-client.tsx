@@ -86,9 +86,9 @@ function ControlsTable({ report }: { report: FrameworkReport }) {
 
   return (
     <div className="overflow-hidden">
-      <div className="px-6 py-3.5 border-b border-border flex items-center justify-between bg-muted/20">
+      <div className="px-4 md:px-6 py-3.5 border-b border-border flex flex-wrap items-center justify-between gap-2 bg-muted/20">
         <p className="text-[13px] font-medium">{report.framework.name} — contrôles évalués</p>
-        <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
           <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-emerald-500" />{report.passCount} conformes</span>
           <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-amber-500" />{report.warnCount} partiels</span>
           <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-red-500" />{report.failCount} non conformes</span>
@@ -99,7 +99,7 @@ function ControlsTable({ report }: { report: FrameworkReport }) {
 
       {categories.map((cat) => (
         <div key={cat}>
-          <div className="px-6 py-2 bg-muted/20 border-b border-border">
+          <div className="px-4 md:px-6 py-2 bg-muted/20 border-b border-border">
             <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">{cat}</p>
           </div>
           {report.controls
@@ -110,7 +110,7 @@ function ControlsTable({ report }: { report: FrameworkReport }) {
               return (
                 <button
                   key={ctrl.id}
-                  className={cn("w-full flex items-start gap-4 px-6 py-3 hover:bg-muted/20 transition-colors text-left border-b border-border border-l-2", active ? "border-l-violet-600 bg-violet-50/40" : "border-l-transparent")}
+                  className={cn("w-full flex items-start gap-4 px-4 md:px-6 py-3 hover:bg-muted/20 transition-colors text-left border-b border-border border-l-2", active ? "border-l-violet-600 bg-violet-50/40" : "border-l-transparent")}
                   onClick={() => setOpenId(active ? null : ctrl.id)}
                 >
                   <span className="font-mono text-[11px] text-muted-foreground w-20 shrink-0 pt-0.5">{ctrl.id}</span>
@@ -180,8 +180,8 @@ export function ComplianceClient({
       </HelpPanel>
 
       {/* Stats bar */}
-      <div className="grid grid-cols-4 divide-x divide-border border-b border-border bg-white">
-        <div className="flex items-center gap-4 px-6 py-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-border border-b border-border bg-white">
+        <div className="flex items-center gap-4 px-4 md:px-6 py-4">
           <div className="relative shrink-0">
             <ScoreRing score={globalScore} size={56} />
             <span className={cn("absolute inset-0 flex items-center justify-center text-[13px] font-bold", globalColor)}>
@@ -207,9 +207,9 @@ export function ComplianceClient({
       </div>
 
       {/* Framework selector + controls */}
-      <div className="flex flex-1 min-h-0">
+      <div className="flex flex-col md:flex-row flex-1 min-h-0">
         {/* Sidebar frameworks */}
-        <div className="w-64 shrink-0 border-r border-border flex flex-col gap-1 p-3">
+        <div className="md:w-64 shrink-0 border-b md:border-b-0 md:border-r border-border flex flex-col gap-1 p-3">
           {reports.map((r) => (
             <FrameworkTab
               key={r.framework.id}
@@ -239,7 +239,7 @@ function StatCell({ label, value, icon, tone = "default", sub }: {
 }) {
   const toneClass = { ok: "text-green-600", warning: "text-amber-500", critical: "text-red-600", default: "text-foreground" }[tone];
   return (
-    <div className="px-6 py-4">
+    <div className="px-4 md:px-6 py-4">
       <div className="flex items-center gap-1.5 mb-1.5 text-muted-foreground">{icon}<p className="text-[11px] uppercase tracking-wider">{label}</p></div>
       <p className={cn("text-2xl font-semibold tabular-nums", toneClass)}>{value}</p>
       {sub && <p className="text-[11px] text-muted-foreground mt-0.5">{sub}</p>}
